@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop &amp; Win</title>
+    <link rel="stylesheet" href="https://use.typekit.net/cqb0nmr.css">
+    <link rel="manifest" href="manifest.json" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'
+        integrity='sha512-z4OUqw38qNLpn1libAN9BsoDx6nbNFio5lA6CuTp9NlK83b89hgyCVq+N5FdBJptINztxn1Z3SaKSKUS5UP60Q=='
+        crossorigin='anonymous'></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!--
+
+    font-family: franklin-gothic-urw, sans-serif;
+    font-weight: 300;
+    font-style: normal;
+
+    font-family: sirba-web, serif;
+    font-weight: 700;
+    font-style: normal;
+
+    -->
+    <style>
+        :root {
+            --background: #393e48;
+            --purple--title: #220f36;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 1px solid rgba(255, 0, 0, 0);
+            font-family: franklin-gothic-urw, sans-serif;
+            font-weight: 300;
+            font-style: normal;
+            user-select: none;
+        }
+
+        h2,
+        h3 {
+            font-family: sirba-web, serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        h2 {
+            color: var(--purple--title);
+        }
+
+        html,
+        body {
+            width: 100%;
+            width: 100vw;
+            overflow-x: hidden;
+        }
+
+        #wrapper {
+            width: 100%;
+            width: 100vw;
+            background: #393e48;
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        #head {
+            width: 95%;
+            height: 95%;
+            width: 95vw;
+            height: 100vh;
+            background-image: url(img/logo.png);
+        }
+
+        #head .toplogo {
+            transform: translateY(50px);
+            max-width: 90%;
+        }
+
+        #head>#left {
+            width: 55%;
+            float: left;
+        }
+
+        #head>#right {
+            width: 44%;
+            float: right;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 45px;
+            color: #96C160;
+        }
+
+        .spacer {
+            width: 100vw;
+            height: 150px;
+        }
+
+        #usps {
+            width: 80%;
+            width: 80vw;
+            height: auto;
+            padding: 50px 10vw;
+            background: #FFF;
+        }
+
+        #usps img {
+            max-height: 40vh;
+        }
+
+        #usps h2 {
+            font-size: 30px;
+        }
+
+        #usps h3 {
+            font-size: 35px;
+            margin-top: 50px;
+            color: #E04244;
+        }
+
+        p {
+            max-width: 90%;
+            margin-bottom: 10px;
+            line-height: 30px;
+        }
+
+
+        #usps>#left {
+            width: 79%;
+            float: left;
+        }
+
+        #usps>#right {
+            width: 20%;
+            height: auto;
+            float: right;
+        }
+
+        #usps>#right>img {
+            margin-bottom: 10px;
+        }
+
+        #foot {
+            color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 20%;
+            letter-spacing: 2px;
+            overflow: hidden;
+        }
+
+        #foot img {
+            max-height: 200px;
+        }
+
+        .quarter {
+            width: 25%;
+            height: 100vh;
+            float: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 50px;
+        }
+
+        .quarter img {
+            max-width: 90%;
+        }
+
+        .half {
+            position: relative;
+            width: 50%;
+            height: 100vh;
+            float: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: top;
+            row-gap: 50px;
+        }
+
+        .half img {
+            max-width: 90%;
+        }
+
+        .screen {
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 5%;
+            width: 45%;
+            margin: 0 auto;
+        }
+
+        .scrolltext {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: #96C160
+        }
+
+
+        #nextpage {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 75px;
+            display: flex;
+            flex-direction: column;
+            width: auto;
+            align-items: center;
+        }
+
+        #nextpage>img {
+            display: block;
+            max-width: 50px;
+        }
+
+        .scrollbase {
+            position: fixed;
+            bottom: -35px;
+        }
+
+        .arrow {
+            display: block;
+            position: fixed;
+            opacity: 0;
+            bottom: -45px;
+        }
+
+        canvas {
+            z-index: 99999;
+        }
+
+        @media screen and (max-width: 1512px) {
+            .quarter img {
+                max-width: 80% !important;
+            }
+        }
+
+        @media screen and (max-width: 1200px) {
+            .quarter img {
+                max-width: 80% !important;
+            }
+        }
+
+        @media screen and (max-width:930px) {
+            .subtitle {
+                display: none;
+            }
+
+            .scrolltext {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width:429px) {
+            #head>#left {
+                width: 100vw;
+            }
+
+            .toplogo {
+                width: 80vw;
+                margin-left: 10vw;
+            }
+
+            #head>#right {
+                width: 100%;
+            }
+
+            #head .subtitle {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+
+            #head .toplogo {
+                transform: translateY(0px);
+                max-width: 100%;
+            }
+
+
+            .half {
+                display: flex;
+                justify-content: end;
+            }
+
+            .quarter {
+                padding-top: 25px;
+            }
+
+            .half img {
+                margin-bottom: 100px;
+                max-width: 120% !important;
+                z-index: 9998;
+            }
+
+            #usps {
+                width: calc(100vw - 50px);
+                padding: 25px;
+            }
+
+            #usps>#left {
+                width: 100%;
+            }
+
+            #usps>#right {
+                display: none;
+            }
+
+            #usps h2 {
+                font-size: 25px;
+                margin-top: 25px;
+            }
+
+            #usps h3 {
+                font-size: 20px;
+            }
+
+            #foot {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #foot img {
+                width: 50vw;
+            }
+
+            #foot p {
+                font-size: 15px;
+                letter-spacing: 0px;
+                text-align: center;
+            }
+
+            .hidemobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <header id="head">
+            <div id="left">
+                <div class="quarter" style="margin-top:-75px;">
+                    <img class="initanim" src="img/icoon_minigame.svg" alt="">
+                    <img class="initanim" src="img/icoon_kassabon.svg" alt="">
+                </div>
+                <div class="half">
+                    <img src="img/Zuil.png" alt="">
+                </div>
+                <div class="quarter" style="margin-top:75px;">
+                    <img class="initanim" src="img/icoon_crossselling.svg" alt="">
+                    <img class="initanim" src="img/icoon_omzet.svg" alt="">
+                </div>
+            </div>
+            <div id="right">
+                <img class="toplogo" src="img/ShopnWin_logo.svg" />
+                <div id="nextpage">
+                    <h2 class="subtitle initanim">Klantenbinding is<br />eigenlijk zo eenvoudig</h2>
+                    <h4 class="scrolltext initanim">Scroll voor meer info</h4>
+                    <img class="scrollbase" src="img/icoon_scrollen_bg.svg" alt="">
+                    <img class="arrow arrowone" src="img/icoon_scrollen_pijltje.svg" alt="">
+                    <img class="arrow arrowtwo" src="img/icoon_scrollen_pijltje.svg" alt="">
+                </div>
+            </div>
+        </header>
+        <div class="spacer"></div>
+        <div id="usps">
+            <div id="left">
+                <h2 class="viewscroll">Wat is Shop &amp; Win</h2>
+                <p class="viewscroll">
+                    De Shop & Win zuil is speciaal ontwikkeld om in winkelgebieden of in winkelcentra extra
+                    betrokkenheid te creëren bij het winkelend publiek. Met als uiteindelijk doel de omzet te verhogen
+                    van de deelnemende winkels. Op een laagdrempelige wijze kunnen mensen de barcode op hun kassabon
+                    scannen en door het spelen van een klein kansspelletje zien ze welke prijs of korting ze hebben
+                    gewonnen.
+                </p>
+                <h2 class="viewscroll">Hoe werkt het</h2>
+                <p class="viewscroll">
+                    De barcode op de kassabon van de deelnemende winkels gebruik je als code om zelf te scannen bij de
+                    zuil. Op het touch scherm verschijnt een eenvoudig kansspelletje. Je maakt een keuze uit 9
+                    speelkaarten door deze aan te tikken op het scherm. Je ziet direct wat je hebt gewonnen, de
+                    hoofdprijs of een troostprijs. Via de bon printer in de zuil ontvang je je voucher waarmee je je
+                    prijs kunt ophalen bij de desbetreffende winkel. Elke bon kan maar een keer gescand worden. Wanneer
+                    een winkelier geen kassabon met barcode heeft kunnen er ook barcode kaartjes worden gemaakt welke
+                    uitgegeven en gescand kunnen worden. De deelnemende winkels bepalen zelf de hoeveelheid prijzen en
+                    kortingsbonnen die ze willen uitgeven.
+                </p>
+                <h2 class="viewscroll">Wat levert het op</h2>
+                <p class="viewscroll">
+                    Hoe meer winkels er mee doen, hoe meer je uit deze actie haalt. Niet elke winkel zal budget hebben
+                    om prijzen of kortingen weg te geven, maar elke bijdrage maakt de actie leuker, hoe klein de prijs
+                    ook is. De omzetverhoging bij Maxis Muiden liep op tot wel 30% tijdens de Shop & Win actie.
+                </p>
+                <h2 class="viewscroll">Zelf eenvoudig prijzen toevoegen</h2>
+                <p class="viewscroll">
+                    Het systeem is zo gemaakt dat via een CMS (Content Management Systeem) zelf de winkels en de prijzen
+                    kunnen worden toegevoegd. Het is zelfs mogelijk om zelf de aantallen van uitgifte te bepalen en de
+                    win kans aan te geven.
+                </p>
+                <h2 class="viewscroll">Een eigen zuil of huren</h2>
+                <p class="viewscroll">
+                    De Shop & Win zuil is te koop of te huur voor speciale acties. Denk bijvoorbeeld aan de periodes
+                    zoals Sint, Kerst, Oud & Nieuw of Valentijnsdag, Vaderdag en Moederdag.
+                </p>
+                <h3 class="viewscroll">Vraag ons naar de mogelijkheden en de kosten</h3>
+            </div>
+            <div id="right">
+                <img class="viewscroll" src="img/foto_1.jpg" alt="">
+                <img class="viewscroll" src="img/foto_2.jpg" alt="">
+            </div>
+        </div>
+        <footer id="foot">
+            <img class="viewscroll" src="img/ShopnWin_logo.svg" />
+            <p class="viewscroll">Studio Harm Hasenaar . info@studioharmhasenaar.nl <span class="hidemobile">.</span>
+                0294 26 56 93</p>
+        </footer>
+    </div>
+    <script>
+        var myCanvas = document.createElement('canvas');
+        Object.assign(myCanvas.style, {
+            width: '100vw',
+            height: '100vh',
+            position: ' fixed',
+            top: 0,
+            left: 0
+        });
+        document.body.appendChild(myCanvas);
+
+        var myConfetti = confetti.create(myCanvas, {
+            resize: true,
+            useWorker: true
+        });
+
+        function splash() {
+            myConfetti({
+                colors: ['#A572A5', '#E04244', '#00bff2', '#008ece', '#96c160', '#00a05e', '#ea8742', '#c64472'],
+                particleCount: 100,
+                startVelocity: 75,
+                spread: 50,
+                angle: 35,
+                origin: { x: -0.05, y: 0.5 }
+            });
+            myConfetti({
+                colors: ['#A572A5', '#E04244', '#00bff2', '#008ece', '#96c160', '#00a05e', '#ea8742', '#c64472'],
+                particleCount: 100,
+                startVelocity: 75,
+                spread: 50,
+                angle: 145,
+                origin: { x: 1.05, y: 0.5 }
+            });
+        };
+
+        anime({
+            targets: '.arrowone',
+            translateY: [-60, 0],
+            easing: 'linear',
+            duration: 2500,
+            loop: true
+        });
+        anime({
+            targets: '.arrowtwo',
+            translateY: [-60, 50],
+            easing: 'linear',
+            duration: 2500,
+            loop: true
+        });
+        anime({
+            targets: '.arrowone, .arrowtwo',
+            opacity: [0, 1],
+            easing: 'linear',
+            duration: 2500,
+            loop: true
+        });
+
+
+        anime({
+            targets: '.initanim',
+            opacity: [0, 1],
+            delay: anime.stagger(750, { start: 500 })
+        });
+
+        window.addEventListener('scroll', function () {
+            console.log('hi');
+            if (window.pageYOffset > 100) {
+                document.querySelector('.scrollbase').style.display = 'none';
+                document.querySelector('.arrowone').style.display = 'none';
+                document.querySelector('.arrowtwo').style.display = 'none';
+            }
+            else {
+                document.querySelector('.scrollbase').style.display = 'block';
+                document.querySelector('.arrowone').style.display = 'block';
+                document.querySelector('.arrowtwo').style.display = 'block';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                for ( let i=0; i<5; i++ ){
+                    setTimeout(splash,500);
+                }
+            }, 2500);
+        });
+        window.addEventListener('click', () => {
+            splash();
+        });
+        window.addEventListener('touchstart', () => {
+            splash();
+        });
+    </script>
+
+    <script type="module">
+        import { ViewScroll } from './js/viewscroll.js';
+        let vs = new ViewScroll('#wrapper', '.viewscroll');
+    </script>
+
+</body>
+
+</html>
